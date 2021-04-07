@@ -22,6 +22,7 @@
                      {{ $review->body }}
                 </p>
                 <a href="{{ route('show', ['id' => $review->id ]) }}" class='btn btn-secondary detail-btn'>詳細を読む</a>
+                
                 </div>
                 </div>
                 </div>
