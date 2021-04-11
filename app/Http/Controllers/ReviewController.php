@@ -32,7 +32,7 @@ class ReviewController extends Controller
     }
     
     
-    /*     //サンプル追加
+        //サンプル追加
          public function ajaxlike(Request $request)
     {
         $review_id = $request->review_id;
@@ -104,7 +104,7 @@ like.on('click', function () {
 });
 });
 //ここまで
-    */
+    
     
     
     public function show($id)
