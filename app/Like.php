@@ -6,16 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    //配列内の要素を書き込み可能にする
-  protected $fillable = ['reply_id','user_id'];
+    //
+    //いいねしている投稿
+    public function review()
+    {
+        return $this->belongsTo(Reviews::class);
+    }
 
-  public function reply()
-  {
-    return $this->belongsTo(Reply::class);
-  }
+    //いいねが既にされているかを確認
+    public function like_exist($review_id)
+    {
+        //Likesテーブルのレコードにユーザーidと投稿idが一致するものを取得
+        $exist = Like::where('review_id', '=', $review_id)->get();
 
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
+        // レコード（$exist）が存在するなら
+        if (!$exist->isEmpty()) {
+            return true;
+        } else {
+        // レコード（$exist）が存在しないなら
+            return false;
+        }
+    }
 }

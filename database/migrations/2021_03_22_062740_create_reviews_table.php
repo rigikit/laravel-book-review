@@ -19,6 +19,12 @@ class CreateReviewsTable extends Migration
         $table->bigInteger('user_id')->unsigned();
         $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         $table->string('title');
+        
+        //サンプルを見て追加
+        $table->string('content');
+            $table->string('category');
+        //
+        
         $table->longText('body');
         $table->string('image')->nullable(); //画像投稿しない場合に備えてNULL許可しておく
         $table->tinyInteger('status')->default(1)->comment('0=下書き, 1=アクティブ, 2=削除済み');

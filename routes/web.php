@@ -22,6 +22,3 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/reply/like/{id}', 'RepliesController@like')->name('reply.like');
-Route::get('/reply/unlike/{id}', 'RepliesController@unlike')->name('reply.unlike');

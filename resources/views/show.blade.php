@@ -26,16 +26,17 @@
   </div>
 </div>
 
-//いいね実装部分
-<div>
-  @if($reply->is_liked_by_auth_user())
-    <a href="{{ route('reply.unlike', ['id' => $reply ?? ''->id]) }}" class="btn btn-success btn-sm">いいね<span class="badge">{{ $reply ?? ''->likes->count() }}</span></a>
-  @else
-    <a href="{{ route('reply.like', ['id' => $reply ?? ''->id]) }}" class="btn btn-secondary btn-sm">いいね<span class="badge">{{ $reply ?? ''->likes->count() }}</span></a>
-  @endif
-</div>
-
-{{ $reply ?? ''->likes->count() }}
+//ここから追加した
+@if($like_model->like_exist($review->id))
+<p class="favorite-marke">
+  <a class="js-like-toggle loved" href="" data-postid="{{ $review->id }}"><i class="fas fa-heart"></i></a>
+  <span class="likesCount">{{$review->likes_count}}</span>
+</p>
+@else
+<p class="favorite-marke">
+  <a class="js-like-toggle" href="" data-postid="{{ $review->id }}"><i class="fas fa-heart"></i></a>
+  <span class="likesCount">{{$review->likes_count}}</span>
+</p>
+@endif
 //ここまで
-
 @endsection
