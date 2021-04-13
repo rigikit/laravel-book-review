@@ -37,4 +37,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    // Relationship
+    public function likes() {
+
+        return $this->hasMany(\App\Like::class, 'parent_id', 'id')
+            ->where('model', self::class);
+
+    }
+    
 }

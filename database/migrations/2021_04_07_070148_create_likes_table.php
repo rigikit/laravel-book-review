@@ -10,14 +10,9 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('review_id');
-
-            $table->foreign('review_id')
-                    ->references('id')
-                    ->on('reviews')
-                    ->onDelete('cascade');
-
-
+            $table->string('model')->comment('モデル名');
+            $table->integer('parent_id')->comment('モデルのID');
+            $table->string('ip')->comment('IPアドレス');
             $table->timestamps();
         });
     }

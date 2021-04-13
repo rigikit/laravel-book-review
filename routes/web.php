@@ -22,3 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//追加
+Route::get('/like', 'LikeController@index'); // 👈 ブラウザでアクセスする
+Route::get('/ajax/like/user_list', 'LikeController@user_list'); // 👈 ユーザー情報を取得
+Route::post('/ajax/like', 'LikeController@like'); // 👈 いいね！データを追加
