@@ -17,12 +17,13 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id');
             // ==========ここから追加する==========
         $table->bigInteger('user_id')->unsigned();
-        $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+        
+        
         $table->string('title');
         
         //サンプルを見て追加
-        $table->string('content');
-            $table->string('category');
+        $table->string('content')->nullable();
+            $table->string('category')->nullable();
         //
         
         $table->longText('body');
@@ -32,6 +33,7 @@ class CreateReviewsTable extends Migration
         $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 // ==========ここまで追加する==========
+       $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Like;
 use Illuminate\Support\Facades¥Auth;
 use App\Review;
-
+use Auth;
+use Log;
 class ReviewController extends Controller
 {
     public function index()
@@ -21,6 +22,7 @@ class ReviewController extends Controller
         //withCount('テーブル名')とすることで、リレーションの数も取得できます。
         $reviews = Review::withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
         $like_model = new Like;
+        $reviewLikesCount = Like::where('review_id', $review_id)->get()->count();
 
         $data = [
                 'reviews' => $reviews,
@@ -28,9 +30,46 @@ class ReviewController extends Controller
             ];
 
         return view('reviews.index', $data);
-         //
     }
     
+    
+    public function like(Request $request)
+    {
+        $id = Auth::user()->id;
+        $review_id = $request->review_id;
+        
+        Log::info('ログ出力テスト1');
+        $like = new Like;
+        $post = Review::where('review_id', $review_id);
+
+         Log::info('ログ出力テスト2');
+
+        // 空でない（既にいいねしている）なら
+        if ($like->like_exist($id, $review_id)) {
+            //likesテーブルのレコードを削除
+            $like = Like::where('review_id', $review_id)->where('user_id', $id)->delete();
+        } else {
+            //空（まだ「いいね」していない）ならlikesテーブルに新しいレコードを作成する
+            $like = new Like;
+            $like->review_id = $request->review_id;
+            $like->user_id = Auth::user()->id;
+            $like->save();
+        }
+
+         Log::info('ログ出力テスト3');
+
+        //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
+        //$reviewLikesCount = $post->loadCount('likes')->likes_count;
+        $reviewLikesCount = Like::where('review_id', $review_id)->get()->count();
+
+        //一つの変数にajaxに渡す値をまとめる
+        //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
+        $json = [
+            'reviewLikesCount' => $reviewLikesCount,
+        ];
+        //下記の記述でajaxに引数の値を返す
+        return response()->json($json);
+    }    
     
     public function show($id)
 {

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     //
+    //いいねしているユーザー
+     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }    
     //いいねしている投稿
     public function review()
     {

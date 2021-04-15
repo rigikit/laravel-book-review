@@ -4,12 +4,12 @@ var likePostId;
 
 like.on('click', function () {
     var $this = $(this);
-    likePostId = $this.data('postid');
+    likePostId = $this.data('review_id');
     $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/ajaxlike',  //routeの記述
+            url: '/review/like',  //routeの記述
             type: 'POST', //受け取り方法の記述（GETもある）
             data: {
                 'post_id': likePostId //コントローラーに渡すパラメーター
@@ -21,8 +21,8 @@ like.on('click', function () {
 //lovedクラスを追加
             $this.toggleClass('loved'); 
 
-//.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
-            $this.next('.likesCount').html(data.postLikesCount); 
+//.likesCountの次の要素のhtmlを「data.reviewLikesCount」の値に書き換える
+            $this.next('.likesCount').html(data.reviewLikesCount); 
 
         })
         // Ajaxリクエストが失敗した場合
