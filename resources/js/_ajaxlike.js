@@ -12,8 +12,8 @@ like.on('click', function () {
             url: '/review/like',  //routeの記述
             type: 'POST', //受け取り方法の記述（GETもある）
             data: {
-                'post_id': likePostId //コントローラーに渡すパラメーター
-            },
+                    'review_id': likeReviewId //コントローラーに渡すパラメーター
+                },
     })
 
         // Ajaxリクエストが成功した場合

@@ -74,8 +74,11 @@ class ReviewController extends Controller
     public function show($id)
 {
     $review = Review::where('id', $id)->where('status', 1)->first();
-
-    return view('show', compact('review'));
+    $like_model = new Like;
+    $reviewLikesCount = Like::where('review_id', $id)->get()->count();
+        $likes_count = $reviewLikesCount;
+        
+        return view('show', compact('review','like_model','likes_count'));
 }
     
     public function create()
